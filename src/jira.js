@@ -25,7 +25,7 @@
         // add any other special mapping Jira to GitHub branch type here, apart from featrures
     };
     const githubBranchType = ticketToGithubBranch?.[jiraTicketType] || "feature";
-    const githubBranch = `${githubBranchType}/${ticketID}-${jiraTicketTitle.toLowerCase().replaces(/\s\//g, "-")}`;
+    const githubBranch = `${githubBranchType}/${ticketID}-${jiraTicketTitle.toLowerCase().replace(/\s\//g, "-")}`;
     
     prompt("Copy your branch name:", githubBranch);
     prompt("Copy your PR title:", githubPRTitle);
