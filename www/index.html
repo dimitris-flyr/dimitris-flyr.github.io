@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <style>
+            body {
+                max-width: 1350px;
+                margin: 0 auto;
+                padding: 10px;
+            }
+            table, th, td {
+                border: 1px solid;
+            }
+        </style>
+    </head>
+<body>
+    <h1>My bookmarklets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Bookmarklet
+                </th>
+                <th colspan="2">
+                    Description
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <script>
+            function loadBookmarket(fileName, description) {
+                const href = `javascript:
+                    (d => {
+                    const s = d.createElement('script');
+                    s.src='${window.location.href}js/${fileName}.js?cachebust='+Date.now();
+                    s.type='text/javascript';
+                    d.head.appendChild(s);
+                    })(document)
+                `.replace(/\n\s+/g, '');
+                
+                document.write(`<tr><td><a href="${href}">${fileName}</a></td><td colspan="2"> ${description}</td></tr>`)
+            }
+            loadBookmarket("jira", "Jira")
+        </script>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "bookmarklets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "esbuild src/* --servedir=www --outdir=www/js",
+    "build": "esbuild src/* --minify --outdir=www/js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.14.24"
+  }
+}
