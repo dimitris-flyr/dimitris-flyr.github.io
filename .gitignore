@@ -1,2 +1,1 @@
-# Ignore built artifacts
-www/js
+node_modules/
