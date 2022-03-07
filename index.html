@@ -30,7 +30,7 @@
                 const href = `javascript:
                     (d => {
                     const s = d.createElement('script');
-                    s.src='${window.location.href}js/${fileName}.js?cachebust='+Date.now();
+                    s.src='${window.location.href}dist/js/${fileName}.js?cachebust='+Date.now();
                     s.type='text/javascript';
                     d.head.appendChild(s);
                     })(document)

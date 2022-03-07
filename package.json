@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "esbuild src/* --servedir=www --outdir=www/js",
-    "build": "esbuild src/* --minify --outdir=www/js"
+    "dev": "esbuild src/* --servedir=. --outdir=dist/js",
+    "build": "esbuild src/* --minify --outdir=dist/js"
   },
   "author": "",
   "license": "ISC",
