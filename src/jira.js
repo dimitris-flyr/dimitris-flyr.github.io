@@ -27,6 +27,7 @@
     const githubBranchType = ticketToGithubBranch?.[jiraTicketType] || "feature";
     const branchTitle = jiraTicketTitle
                             .toLowerCase()
+                            .trim() // Trim any leading/trailing whitespaces to avoid leading/trailing -
                             .replace(/[^a-z0-9]/g, "-") // Replace anything that is not alphanumeric with -
                             .replace(/\-+/g, '-') // Replace repeated -
 
