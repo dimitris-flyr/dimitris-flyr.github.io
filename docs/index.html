@@ -35,10 +35,27 @@
                     d.head.appendChild(s);
                     })(document)
                 `.replace(/\n\s+/g, '');
-                
                 document.write(`<tr><td><a href="${href}">${fileName}</a></td><td colspan="2"> ${description}</td></tr>`)
             }
+            
+            // We can't inject a script on GitHub, therefore we run it inline
+            function loadToEphEnvBookmarklet() {
+                const toEphEnv = `javascript:(() => {
+                    const prPathnameMatches = window.location.pathname.match(/pull\\/(\\d+)/);
+                    const prID = prPathnameMatches ? prPathnameMatches[1] : null;
+                    if (!prID) {
+                        console.warn('No PR ID found in this page');
+                        return;
+                    }
+                    window.location.href = \`https://\${prID}-n4.cirrus.ai/ancillaries/\`;
+                })();`;
+                
+                document.write(`<tr><td><a href="${toEphEnv}">to-eph-env</a></td><td colspan="2"> To ephimeral environment from PR</td></tr>`)
+            }
+
+
             loadBookmarket("jira", "Jira")
+            loadToEphEnvBookmarklet()
         </script>
         </tbody>
     </table>

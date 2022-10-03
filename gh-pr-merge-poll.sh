@@ -4,13 +4,13 @@
 # 1. brew install gh
 # 2. Login with gh account
 
-prid=10356
+prid=$1
 sleep_in_s=20
 
 while true
 do
     echo "Trying to merge"
-    gh pr merge $prid --squash
+    gh pr merge $prid --squash --repo https://github.com/FlyrInc/fusionrm
     if [ $? -eq 0 ]; then
         exit 0
     else
