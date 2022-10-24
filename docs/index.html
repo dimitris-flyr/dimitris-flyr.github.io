@@ -26,6 +26,7 @@
         </thead>
         <tbody>
         <script>
+
             function loadBookmarket(fileName, description) {
                 const href = `javascript:
                     (d => {
@@ -37,9 +38,9 @@
                 `.replace(/\n\s+/g, '');
                 document.write(`<tr><td><a href="${href}">${fileName}</a></td><td colspan="2"> ${description}</td></tr>`)
             }
-            
+
             // We can't inject a script on GitHub, therefore we run it inline
-            function loadToEphEnvBookmarklet() {
+            function loadToEphEnvFEBookmarklet() {
                 const toEphEnv = `javascript:(() => {
                     const prPathnameMatches = window.location.pathname.match(/pull\\/(\\d+)/);
                     const prID = prPathnameMatches ? prPathnameMatches[1] : null;
@@ -47,15 +48,48 @@
                         console.warn('No PR ID found in this page');
                         return;
                     }
-                    window.location.href = \`https://\${prID}-n4.cirrus.ai/ancillaries/\`;
+                    window.open(\`https://\${prID}-n4.cirrus.ai/ancillaries/\`, '_blank').focus();
                 })();`;
                 
-                document.write(`<tr><td><a href="${toEphEnv}">to-eph-env</a></td><td colspan="2"> To ephimeral environment from PR</td></tr>`)
+                document.write(`<tr><td><a href="${toEphEnv}">EphEnv: Frontend</a></td><td colspan="2">GitEphEnv: Frontend from PR</td></tr>`)
+            }
+
+            // We can't inject a script on GitHub, therefore we run it inline
+            function loadToEphEnvArgoCDBookmarklet() {
+                const toEphEnv = `javascript:(() => {
+                    const prPathnameMatches = window.location.pathname.match(/pull\\/(\\d+)/);
+                    const prID = prPathnameMatches ? prPathnameMatches[1] : null;
+                    if (!prID) {
+                        console.warn('No PR ID found in this page');
+                        return;
+                    }
+                    window.open(\`https://argocd.flyrlabs.com/applications/ancillaries-\${prID}\`, '_blank').focus();
+
+                })();`;
+                
+                document.write(`<tr><td><a href="${toEphEnv}">EphEnv: Argo CD</a></td><td colspan="2">GitEphEnv: Argo CD from PR</td></tr>`)
+            }
+            
+            // We can't inject a script on GitHub, therefore we run it inline
+            function loadToEphEnvArgoBookmarklet() {
+                const toEphEnv = `javascript:(() => {
+                    const prPathnameMatches = window.location.pathname.match(/pull\\/(\\d+)/);
+                    const prID = prPathnameMatches ? prPathnameMatches[1] : null;
+                    if (!prID) {
+                        console.warn('No PR ID found in this page');
+                        return;
+                    }
+                    window.open(\`https://n4-argo-dev.cirrus.ai/workflow-templates/anc-\${prID}\`, '_blank').focus();
+
+                })();`;
+                document.write(`<tr><td><a href="${toEphEnv}">EphEnv: Argo Workflows</a></td><td colspan="2">GitEphEnv: Argo Workflows from PR</td></tr>`)
             }
 
 
             loadBookmarket("jira", "Jira")
-            loadToEphEnvBookmarklet()
+            loadToEphEnvFEBookmarklet()
+            loadToEphEnvArgoCDBookmarklet()
+            loadToEphEnvArgoBookmarklet()
         </script>
         </tbody>
     </table>
