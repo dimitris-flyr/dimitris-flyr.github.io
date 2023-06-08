@@ -83,12 +83,40 @@
                 })();`;
                 document.write(`<tr><td><a href="${toEphEnv}">EphEnv: Argo Workflows</a></td><td colspan="2">GitEphEnv: Argo Workflows from PR</td></tr>`)
             }
+            // We can't inject a script on GitHub, therefore we run it inline
+            function loadToEphEnvPodBookmarklet() {
+                const toEphEnv = `javascript:(() => {
+                    const prPathnameMatches = window.location.pathname.match(/pull\\/(\\d+)/);
+                    const prID = prPathnameMatches ? prPathnameMatches[1] : null;
+                    if (!prID) {
+                        console.warn('No PR ID found in this page');
+                        return;
+                    }
+                    
+                    window.open(\`https://console.cloud.google.com/kubernetes/deployment/europe-west4-c/application-sandbox/anc-\${prID}/ancillaries-metrics-\${prID}/overview?project=fusionrm-fl-sandbox\`, '_blank').focus();
+
+                })();`;
+                document.write(`<tr><td><a href="${toEphEnv}">EphEnv: K8s Pod</a></td><td colspan="2">GitEphEnv: K8s Pod from PR</td></tr>`)
+            }
+
+
+            function argoWorkflowsTok8sPod() {
+                // After clicking on a step in the workflow it open the white box on the right
+                const toK8sPod = `javascript:(() => {
+                    const namespace = window.location.pathname.split('/')[2];
+                    const podName = document.querySelector('.white-box__details').querySelectorAll('.row.white-box__details-row')[2].children[1].innerText.trim();
+                    window.open(\`https://console.cloud.google.com/kubernetes/pod/europe-west4-c/application-sandbox/\${namespace}/\${podName}/details?project=fusionrm-fl-sandbox\`, '_blank').focus();
+                })();`
+                document.write(`<tr><td><a href="${toK8sPod}">Argo Worfklows step to k8s pod</a></td><td colspan="2">ArgoW: K8s pod from Argo Workflow step</td></tr>`)
+            }
 
 
             loadBookmarket("jira", "Jira")
+            argoWorkflowsTok8sPod()
             loadToEphEnvFEBookmarklet()
             loadToEphEnvArgoCDBookmarklet()
             loadToEphEnvArgoBookmarklet()
+            loadToEphEnvPodBookmarklet()
         </script>
         </tbody>
     </table>
