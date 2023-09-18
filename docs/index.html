@@ -104,7 +104,7 @@
                 // After clicking on a step in the workflow it open the white box on the right
                 const toK8sPod = `javascript:(() => {
                     const client = window.location.hostname.slice(0, 2);
-s                   const namespace = window.location.pathname.split('/')[2];
+                    const namespace = window.location.pathname.split('/')[2];
                     const podName = document.querySelector('.white-box__details .workflow-details__attribute-grid').children[5].innerText.trim();
                     window.open(\`https://console.cloud.google.com/kubernetes/pod/europe-west4-c/application-sandbox/\${namespace}/\${podName}/details?project=fusionrm-\${client}-sandbox\`, '_blank').focus();
                 })();`
