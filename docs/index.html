@@ -104,13 +104,21 @@
                 // After clicking on a step in the workflow it open the white box on the right
                 const toK8sPod = `javascript:(() => {
                     const client = window.location.hostname.slice(0, 2);
+                    const argoEnv = window.location.hostname.split('-')[2].split('.')[0];
                     const namespace = window.location.pathname.split('/')[2];
                     const podName = document.querySelector('.white-box__details .workflow-details__attribute-grid').children[5].innerText.trim();
-                    window.open(\`https://console.cloud.google.com/kubernetes/pod/europe-west4-c/application-sandbox/\${namespace}/\${podName}/details?project=fusionrm-\${client}-sandbox\`, '_blank').focus();
+                    const argoEnvToK8sEnv = {
+                        'dev': 'sandbox',
+                        'staging': 'staging',
+                        'integration': 'non-prod',
+                        'prod': 'prod',
+                    };
+                    const k8senv = argoEnvToK8sEnv[argoEnv];
+                    console.log({client, argoEnv, namespace, podName, argoEnvToK8sEnv, k8senv});
+                    window.open(\`https://console.cloud.google.com/kubernetes/pod/europe-west4/application-\${k8senv}/\${namespace}/\${podName}/details?project=fusionrm-\${client}-\${k8senv}\`, '_blank').focus();
                 })();`
                 document.write(`<tr><td><a href="${toK8sPod}">Argo Worfklows step to k8s pod</a></td><td colspan="2">ArgoW: K8s pod from Argo Workflow step</td></tr>`)
             }
-
 
             loadBookmarket("jira", "Jira")
             argoWorkflowsTok8sPod()
